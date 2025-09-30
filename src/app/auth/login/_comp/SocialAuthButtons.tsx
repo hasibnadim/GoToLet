@@ -3,8 +3,7 @@
 import { Button } from "@/components/ui/button";
 
 interface SocialAuthButtonsProps {
-  onGoogleAuth: () => void;
-  onFacebookAuth: () => void;
+  onGoogleAuth: () => void; 
   loading: boolean;
 }
 

@@ -4,7 +4,8 @@ import "./globals.css";
 import { AuthProvider } from "@/contexts/AuthContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-
+import { migrate } from "@/services/mongodb";
+await migrate();
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],

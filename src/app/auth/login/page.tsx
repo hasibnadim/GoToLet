@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Separator } from "@/components/ui/separator"; 
+import { Separator } from "@/components/ui/separator";
 import { useAuth } from "@/contexts/AuthContext";
 import AuthHeader from "./_comp/AuthHeader";
 import SocialAuthButtons from "./_comp/SocialAuthButtons";
@@ -9,11 +9,11 @@ import EmailAuthForm from "./_comp/EmailAuthForm";
 import AuthToggle from "./_comp/AuthToggle";
 import TermsNotice from "./_comp/TermsNotice";
 import ErrorDisplay from "./_comp/ErrorDisplay";
-export const dynamic = "force-static"; 
+export const dynamic = "force-static";
 export default function Login() {
   // const searchParams = useSearchParams();
   const [isSignUp, setIsSignUp] = useState(false);
-  const { loading, error, login, signup, loginWithGoogle, loginWithFacebook } = useAuth();
+  const { loading, error, login, signup, loginWithGoogle } = useAuth();
 
   // Initialize signup state from URL
   // useEffect(() => {
@@ -29,18 +29,18 @@ export default function Login() {
   const handleToggleMode = () => {
     const newMode = !isSignUp;
     setIsSignUp(newMode);
-    
+
     // Update URL without page reload
-  //   if (newMode) {
-  //     router.replace('/auth/login?mode=signup');
-  //   } else {
-  //     router.replace('/auth/login');
-  //   }
+    //   if (newMode) {
+    //     router.replace('/auth/login?mode=signup');
+    //   } else {
+    //     router.replace('/auth/login');
+    //   }
   };
 
   const onEmailSubmit = (email: string, password: string, confirmPassword?: string, fullName?: string) => {
     if (isSignUp) {
-      signup(email, password, confirmPassword || "", fullName);
+      signup(email, password, fullName || "");
     } else {
       login(email, password);
     }
@@ -51,14 +51,13 @@ export default function Login() {
 
       <div className="flex items-center justify-center p-3 lg:p-5">
         <div className="w-full max-w-md space-y-6">
-          
+
           <AuthHeader isSignUp={isSignUp} />
-          
+
           <ErrorDisplay error={error} />
 
           <SocialAuthButtons
             onGoogleAuth={loginWithGoogle}
-            onFacebookAuth={loginWithFacebook}
             loading={loading}
           />
 
@@ -83,7 +82,7 @@ export default function Login() {
           />
 
           <TermsNotice isSignUp={isSignUp} />
-          
+
         </div>
       </div>
     </div>

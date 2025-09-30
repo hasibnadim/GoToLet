@@ -8,19 +8,25 @@ import { Loader2 } from "lucide-react";
 interface ProtectedRouteProps {
   children: React.ReactNode;
   redirectTo?: string;
+  isBusiness?: boolean;
 }
 
-export default function ProtectedRoute({ children, redirectTo = "/auth/login" }: ProtectedRouteProps) {
-  const { user, loading } = useAuth();
+export default function ProtectedRoute({ children, redirectTo = "/auth/login", isBusiness }: ProtectedRouteProps) {
+  const { user, loading, status } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (!loading && !user) {
-      router.replace(redirectTo);
+    if (!loading) {
+      if (status === "unauthenticated") {
+        router.replace(redirectTo);
+      }
+      if (isBusiness && user?.accountType !== 'business') {
+        router.replace(redirectTo);
+      }
     }
-  }, [user, loading, router, redirectTo]);
+  }, [user, loading, router, redirectTo, isBusiness,status]);
 
-  if (loading) {
+  if (loading || status === "loading") {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
@@ -29,6 +35,10 @@ export default function ProtectedRoute({ children, redirectTo = "/auth/login" }:
         </div>
       </div>
     );
+  }
+
+  if (isBusiness && user?.accountType !== 'business') {
+    return null; // Will redirect in useEffect
   }
 
   if (!user) {

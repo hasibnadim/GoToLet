@@ -114,19 +114,20 @@ export default function Header() {
 
               <div className="space-y-2">
                 <Link
-                  href="/panel/profile"
+                  href="/panel"
                   onClick={() => setShowStickyMenu(false)}
                   className="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded"
                 >
-                  View Profile
+                  User Panel
                 </Link>
-                {/* <Link
-                  href="/panel/settings"
+                {user.accountType === 'business' && (
+                  <Link
+                  href="/property-manager"
                   onClick={() => setShowStickyMenu(false)}
                   className="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded"
                 >
-                  Settings
-                </Link> */}
+                  Property Manager
+                </Link>)}
                 <button
                   onClick={handleLogout}
                   className="block w-full text-left px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded"
